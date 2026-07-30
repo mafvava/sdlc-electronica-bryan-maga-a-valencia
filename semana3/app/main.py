@@ -1,13 +1,18 @@
 from fastapi import FastAPI
 
+from app.database import Base
+from app.database import engine
 from app.routers.readings import router as reading_router
 from app.routers.sensors import router as sensor_router
 
+
 app = FastAPI(
     title="SensorHub API",
-    description="API para administrar sensores y sus lecturas.",
+    description="API para la gestión de sensores y lecturas.",
     version="1.0.0",
 )
+
+Base.metadata.create_all(bind=engine)
 
 app.include_router(sensor_router)
 app.include_router(reading_router)

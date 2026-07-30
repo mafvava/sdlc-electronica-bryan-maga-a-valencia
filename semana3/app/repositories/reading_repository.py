@@ -7,60 +7,64 @@ from app.schemas.reading import ReadingCreate
 
 
 class ReadingRepository:
-    """Operaciones de base de datos para las lecturas."""
-
-    def __init__(self, db: Session):
-        self.db = db
-
-    def create(self, reading: ReadingCreate) -> Reading:
-        db_reading = Reading(**reading.model_dump())
-
-        self.db.add(db_reading)
-        self.db.commit()
-        self.db.refresh(db_reading)
-
-        return db_reading
-
-    def get_by_id(self, reading_id: int) -> Reading | None:
-        return (
-            self.db.query(Reading)
-            .filter(Reading.id == reading_id)
-            .first()
-        )
+    """Repositorio encargado del acceso a la base de datos de lecturas."""
 
     def get_all(
         self,
+        db: Session,
         skip: int = 0,
         limit: int = 10,
     ) -> list[Reading]:
         return (
-            self.db.query(Reading)
+            db.query(Reading)
             .offset(skip)
             .limit(limit)
             .all()
         )
 
+    def get_by_id(
+        self,
+        db: Session,
+        reading_id: int,
+    ) -> Reading | None:
+        return (
+            db.query(Reading)
+            .filter(Reading.id == reading_id)
+            .first()
+        )
+
+    def create(
+        self,
+        db: Session,
+        reading: ReadingCreate,
+    ) -> Reading:
+        db_reading = Reading(**reading.model_dump())
+
+        db.add(db_reading)
+        db.commit()
+        db.refresh(db_reading)
+
+        return db_reading
+
+    def delete(
+        self,
+        db: Session,
+        db_reading: Reading,
+    ) -> None:
+        db.delete(db_reading)
+        db.commit()
+
     def get_between_dates(
         self,
+        db: Session,
         start: datetime,
         end: datetime,
     ) -> list[Reading]:
         return (
-            self.db.query(Reading)
+            db.query(Reading)
             .filter(
                 Reading.timestamp >= start,
                 Reading.timestamp <= end,
             )
             .all()
         )
-
-    def delete(self, reading_id: int) -> bool:
-        reading = self.get_by_id(reading_id)
-
-        if reading is None:
-            return False
-
-        self.db.delete(reading)
-        self.db.commit()
-
-        return True

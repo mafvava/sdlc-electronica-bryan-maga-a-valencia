@@ -9,13 +9,17 @@ class SensorService:
     """Contiene la lógica de negocio relacionada con los sensores."""
 
     def __init__(self, db: Session):
-        self.repository = SensorRepository(db)
+        self.db = db
+        self.repository = SensorRepository()
 
     def get_all(self):
-        return self.repository.get_all()
+        return self.repository.get_all(self.db)
 
     def get_by_id(self, sensor_id: int):
-        sensor = self.repository.get_by_id(sensor_id)
+        sensor = self.repository.get_by_id(
+            self.db,
+            sensor_id,
+        )
 
         if sensor is None:
             raise HTTPException(
@@ -26,28 +30,46 @@ class SensorService:
         return sensor
 
     def create(self, sensor: SensorCreate):
-        return self.repository.create(sensor)
+        return self.repository.create(
+            self.db,
+            sensor,
+        )
 
     def update(
         self,
         sensor_id: int,
         sensor: SensorCreate,
     ):
-        updated = self.repository.update(sensor_id, sensor)
+        db_sensor = self.repository.get_by_id(
+            self.db,
+            sensor_id,
+        )
 
-        if updated is None:
+        if db_sensor is None:
             raise HTTPException(
                 status_code=404,
                 detail="Sensor no encontrado.",
             )
 
-        return updated
+        return self.repository.update(
+            self.db,
+            db_sensor,
+            sensor,
+        )
 
     def delete(self, sensor_id: int):
-        deleted = self.repository.delete(sensor_id)
+        db_sensor = self.repository.get_by_id(
+            self.db,
+            sensor_id,
+        )
 
-        if not deleted:
+        if db_sensor is None:
             raise HTTPException(
                 status_code=404,
                 detail="Sensor no encontrado.",
             )
+
+        self.repository.delete(
+            self.db,
+            db_sensor,
+        )

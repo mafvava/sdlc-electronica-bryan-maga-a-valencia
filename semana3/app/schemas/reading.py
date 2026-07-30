@@ -1,22 +1,22 @@
 from datetime import datetime
 
-from pydantic import BaseModel
-from pydantic import field_validator
+from pydantic import BaseModel, ConfigDict
 
 
 class ReadingCreate(BaseModel):
-    sensor_id: int
-    value: float
+    """Datos necesarios para crear una lectura."""
 
-    timestamp: datetime | None = None
-
-
-class ReadingResponse(BaseModel):
-    id: int
     sensor_id: int
     value: float
     timestamp: datetime
 
-    model_config = {
-        "from_attributes": True,
-    }
+
+class ReadingResponse(BaseModel):
+    """Representa una lectura almacenada."""
+
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    sensor_id: int
+    value: float
+    timestamp: datetime
