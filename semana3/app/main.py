@@ -6,9 +6,21 @@ from app.routers.readings import router as reading_router
 from app.routers.sensors import router as sensor_router
 
 
+from fastapi import FastAPI
+
 app = FastAPI(
-    title="SensorHub API",
-    description="API para la gestión de sensores y lecturas.",
+    title="SensorHub (EDSIA)",
+    description="""
+API REST para la gestión de sensores y lecturas.
+
+## Funcionalidades
+
+- Gestión de sensores.
+- Registro de lecturas.
+- Validaciones físicas.
+- Paginación.
+- Filtro por rango de fechas.
+    """,
     version="1.0.0",
 )
 

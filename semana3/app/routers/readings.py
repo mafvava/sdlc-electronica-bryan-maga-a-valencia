@@ -9,7 +9,7 @@ from app.services.reading_service import ReadingService
 
 router = APIRouter(
     prefix="/readings",
-    tags=["Readings"],
+    tags=["Lecturas"],
 )
 
 

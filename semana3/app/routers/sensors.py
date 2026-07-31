@@ -7,7 +7,7 @@ from app.services.sensor_service import SensorService
 
 router = APIRouter(
     prefix="/sensors",
-    tags=["Sensors"],
+    tags=["Sensores"],
 )
 
 

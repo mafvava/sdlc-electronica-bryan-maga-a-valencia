@@ -1,83 +1,98 @@
-# AI_LOG.md
+# analisis echos con IA para el codigo
 
 ## Entrada 1
 
-**Fecha:** 28/07/2026
 
 **Objetivo**
-Diseñar la arquitectura del proyecto antes de comenzar a programar.
 
-**Consulta realizada**
-Le pregunté a la IA cuál era la mejor forma de organizar una API con FastAPI siguiendo una arquitectura en capas.
+Quería organizar el proyecto siguiendo la arquitectura en cuatro capas que se pedía para SensorHub. Mi duda era cómo dividir correctamente la lógica entre routers, services, repositories y models sin repetir código ni mezclar responsabilidades queriendo seguir las arquitecturas de la semana 2 y 1.
 
-**Respuesta de la IA**
-Me recomendó separar el proyecto en routers, services, repositories, models y schemas para mantener cada responsabilidad aislada y facilitar el mantenimiento del código.
+**Consulta realizada a la IA**
 
-**Decisión tomada**
-Utilicé esa estructura desde el inicio del proyecto.
+Le pedí una explicación sobre cómo estructurar el proyecto y cómo debía comunicarse cada capa con la siguiente.
 
-**Resultado**
-La API quedó organizada por capas y fue mucho más sencillo implementar el CRUD y agregar nuevas funcionalidades.
+**Respuesta útil**
+
+La IA me explicó que los routers únicamente reciben las solicitudes HTTP, los services contienen toda la lógica de negocio, los repositories son los encargados de acceder a la base de datos y los models representan las tablas. También me mostró cómo inyectar la sesión de la base de datos desde los routers hacia los servicios.
+
+**Qué hice con esa respuesta**
+
+Reorganicé todo el proyecto respetando esa arquitectura y moví la lógica correspondiente a cada capa. Al finalizar, el código quedó más limpio y fue mucho más sencillo localizar los errores cuando aparecieron y tomando en cuenta que esta semana iba a quedar dentro de la raiz, usea la carpeta semana 3 para evidencias de pruebas y test.
+
+**Reflexión**
+
+Entendí que separar responsabilidades hace que el proyecto sea más fácil de mantener y de escalar. Antes tendía a colocar toda la lógica en un solo archivo y ahora veo por qué esa práctica no es recomendable.
 
 ---
 
 ## Entrada 2
 
-**Fecha:** 29/07/2026
 
 **Objetivo**
-Implementar las validaciones de sensores y lecturas.
 
-**Consulta realizada**
-Le pregunté a la IA cómo dividir correctamente las validaciones entre Pydantic y la lógica de negocio.
+Necesitaba corregir varios errores que aparecieron al ejecutar MyPy después de modificar los repositorios y los servicios.
 
-**Respuesta de la IA**
-Me explicó que Pydantic debía validar la estructura de los datos (tipos, campos obligatorios y unidades permitidas) mientras que las reglas físicas, como rangos de temperatura o humedad, debían implementarse en la capa de servicios.
+**Consulta realizada a la IA**
 
-**Decisión tomada**
-Implementé las validaciones de formato en los schemas y las validaciones físicas en ReadingService.
+Le mostré los errores que aparecían en la terminal y le pedí ayuda para identificar cuál era el origen del problema.
 
-**Resultado**
-La API rechaza datos inválidos utilizando los códigos de respuesta correspondientes.
+**Respuesta útil**
 
----
+La IA detectó que algunos métodos de los repositorios ya no coincidían con la forma en la que los servicios los estaban utilizando. También encontró problemas de indentación y diferencias en los parámetros de varios métodos.
+
+**Qué hice con esa respuesta**
+
+Actualicé los repositorios y los servicios para que utilizaran la misma estructura de parámetros y corregí la indentación de algunos métodos. Después de esos cambios, MyPy dejó de mostrar errores y todas las pruebas siguieron funcionando correctamente.
+
+**Reflexión**
+
+Aprendí que MyPy ayuda a encontrar errores antes de ejecutar el programa y que mantener consistencia entre las capas evita muchos problemas durante el desarrollo.
+
 
 ## Entrada 3
 
-**Fecha:** 31/07/2026
 
 **Objetivo**
-Construir pruebas de integración para verificar el funcionamiento de la API.
 
-**Consulta realizada**
-Solicité apoyo para crear pruebas utilizando TestClient de FastAPI y una base de datos temporal.
+Quería comprobar que la API realmente funcionaba y no solamente compilara correctamente.
 
-**Respuesta de la IA**
-Me recomendó utilizar SQLite como base de datos de pruebas, sobrescribir la dependencia get_db() y limpiar la base antes de cada prueba para evitar conflictos.
+**Consulta realizada a la IA**
 
-**Decisión tomada**
-Implementé una base temporal y desarrollé pruebas para sensores y lecturas.
+Le pedí ayuda para crear pruebas de integración utilizando FastAPI TestClient y organizar correctamente los archivos de pruebas.
 
-**Resultado**
-Se obtuvo una cobertura superior al 80% y todas las pruebas se ejecutan correctamente.
+**Respuesta útil**
 
----
+La IA me ayudó a configurar una base de datos SQLite temporal para las pruebas, crear un cliente de pruebas y escribir casos para crear, consultar, actualizar y eliminar sensores y lecturas.
+
+**Qué hice con esa respuesta**
+
+Implementé los archivos de pruebas, ejecuté Pytest, corregí algunos errores relacionados con la base de datos y finalmente obtuve todas las pruebas aprobadas con una cobertura superior al 94%.
+
+**Reflexión**
+
+Comprobé que las pruebas no solo sirven para cumplir un requisito, sino que también ayudan a detectar errores rápidamente cuando se modifica el código y aunque aparecias varios errores, siempre se iban mas a un solo documento mal realizado.
+
+
 
 ## Entrada 4
 
-**Fecha:** 31/07/2026
 
 **Objetivo**
-Corregir errores encontrados durante el desarrollo.
 
-**Consulta realizada**
-Consulté varios errores relacionados con SQLAlchemy, dependencias entre capas, mypy y la configuración de los repositorios.
+Quería mejorar la calidad de la API evitando que existieran sensores duplicados con el mismo nombre.
 
-**Respuesta de la IA**
-Me ayudó a interpretar los mensajes de error, identificar el origen del problema y ajustar la implementación sin modificar la arquitectura del proyecto.
+**Consulta realizada a la IA**
 
-**Decisión tomada**
-Corregí la comunicación entre routers, servicios y repositorios, además de revisar las configuraciones necesarias para Ruff y mypy.
+Le pregunté cuál era la mejor forma de validar nombres repetidos siguiendo una arquitectura limpia y utilizando los códigos HTTP adecuados.
 
-**Resultado**
-El proyecto quedó funcionando correctamente, con Swagger disponible en `/docs`, Ruff sin observaciones, mypy limpio y todas las pruebas aprobadas.
+**Respuesta útil**
+
+La IA propuso agregar una búsqueda por nombre dentro del repositorio y realizar la validación desde la capa de servicio. Si el nombre ya existía, la API debía responder con un código 409 Conflict.
+
+**Qué hice con esa respuesta**
+
+Agregué el método get_by_name() en el repositorio, incorporé la validación en el servicio y escribí una prueba adicional para verificar que el comportamiento fuera correcto. Todas las pruebas continuaron pasando después del cambio.
+
+Reflexión
+
+Aprendí que una API no solo debe funcionar, sino también proteger la integridad de los datos y responder utilizando los códigos HTTP apropiados.
