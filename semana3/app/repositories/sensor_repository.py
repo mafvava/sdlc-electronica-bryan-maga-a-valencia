@@ -21,6 +21,17 @@ class SensorRepository:
             .first()
         )
 
+    def get_by_name(
+        self,
+        db: Session,
+        name: str,
+    ) -> Sensor | None:
+        return (
+            db.query(Sensor)
+            .filter(Sensor.name == name)
+            .first()
+        )
+
     def create(
         self,
         db: Session,

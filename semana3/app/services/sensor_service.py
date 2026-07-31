@@ -29,7 +29,21 @@ class SensorService:
 
         return sensor
 
-    def create(self, sensor: SensorCreate):
+    def create(
+        self,
+        sensor: SensorCreate,
+    ):
+        existing_sensor = self.repository.get_by_name(
+            self.db,
+            sensor.name,
+        )
+
+        if existing_sensor is not None:
+            raise HTTPException(
+                status_code=409,
+                detail="Ya existe un sensor con ese nombre.",
+            )
+
         return self.repository.create(
             self.db,
             sensor,

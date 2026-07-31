@@ -100,3 +100,29 @@ def test_delete_sensor(client: TestClient):
     response = client.get(f"/sensors/{sensor_id}")
 
     assert response.status_code == 404
+
+
+def test_duplicate_sensor(client: TestClient):
+    sensor = {
+        "name": "Sensor Duplicado",
+        "sensor_type": "temperature",
+        "unit": "°C",
+        "location": "Laboratorio",
+    }
+
+    first_response = client.post(
+        "/sensors/",
+        json=sensor,
+    )
+
+    assert first_response.status_code == 201
+
+    second_response = client.post(
+        "/sensors/",
+        json=sensor,
+    )
+
+    assert second_response.status_code == 409
+    assert second_response.json()["detail"] == (
+        "Ya existe un sensor con ese nombre."
+    )
