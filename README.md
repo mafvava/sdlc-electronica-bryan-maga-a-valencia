@@ -176,3 +176,7 @@ python -m mypy app
 Bryan Magaña Valencia
 
 Proyecto desarrollado para la materia de Desarrollo de Software (EDSIA).
+
+## Actualización posterior a la revisión por pares
+
+Se realizaron ajustes menores en la documentación y organización del proyecto después del peer review.git add README.md
