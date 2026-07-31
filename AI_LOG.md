@@ -1,4 +1,4 @@
-# analisis echos con IA para el codigo
+# analisis realizados con IA para el codigo
 
 ## Entrada 1
 
