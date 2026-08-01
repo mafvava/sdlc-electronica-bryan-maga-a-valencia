@@ -1,18 +1,19 @@
 from datetime import datetime
 
-from sqlalchemy import DateTime
-from sqlalchemy import Float
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
+from sqlalchemy import (
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+)
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database import Base
 
 
 class Reading(Base):
-    """Modelo que representa una lectura de un sensor."""
-
+    """Modelo que representa una lectura
+de un sensor."""
     __tablename__ = "readings"
 
     id: Mapped[int] = mapped_column(

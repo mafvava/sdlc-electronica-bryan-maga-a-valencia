@@ -1,7 +1,8 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import sessionmaker
-
+from sqlalchemy.orm import (
+    DeclarativeBase,
+    sessionmaker,
+)
 
 DATABASE_URL = "sqlite:///sensorhub.db"
 
@@ -24,7 +25,8 @@ class Base(DeclarativeBase):
 
 
 def get_db():
-    """Proporciona una sesión de base de datos para cada petición."""
+    """Proporciona una sesión de base de datos
+para cada petición."""
     db = SessionLocal()
     try:
         yield db

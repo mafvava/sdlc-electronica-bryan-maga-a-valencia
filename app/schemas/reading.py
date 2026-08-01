@@ -14,7 +14,9 @@ class ReadingCreate(BaseModel):
 class ReadingResponse(BaseModel):
     """Representa una lectura almacenada."""
 
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(
+        from_attributes=True
+    )
 
     id: int
     sensor_id: int

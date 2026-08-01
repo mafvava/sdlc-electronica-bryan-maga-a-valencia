@@ -7,7 +7,9 @@ from pydantic import BaseModel, ConfigDict, Field
 class SensorCreate(BaseModel):
     """Datos necesarios para crear un sensor."""
 
-    name: str = Field(min_length=1, max_length=100)
+    name: str = Field(
+        min_length=1, max_length=100
+    )
 
     sensor_type: Literal[
         "temperature",
@@ -18,13 +20,17 @@ class SensorCreate(BaseModel):
 
     unit: str
 
-    location: str = Field(min_length=1, max_length=100)
+    location: str = Field(
+        min_length=1, max_length=100
+    )
 
 
 class SensorResponse(BaseModel):
     """Representa un sensor almacenado."""
 
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(
+        from_attributes=True
+    )
 
     id: int
     name: str

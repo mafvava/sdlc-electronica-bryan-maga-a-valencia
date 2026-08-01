@@ -3,18 +3,27 @@ from datetime import datetime
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from app.repositories.reading_repository import ReadingRepository
-from app.repositories.sensor_repository import SensorRepository
+from app.repositories.reading_repository import (
+    ReadingRepository,
+)
+from app.repositories.sensor_repository import (
+    SensorRepository,
+)
 from app.schemas.reading import ReadingCreate
 
 
 class ReadingService:
-    """Contiene la lógica de negocio relacionada con las lecturas."""
+    """Contiene la lógica de negocio
+    relacionada con las lecturas."""
 
     def __init__(self, db: Session):
         self.db = db
-        self.reading_repository = ReadingRepository()
-        self.sensor_repository = SensorRepository()
+        self.reading_repository = (
+            ReadingRepository()
+        )
+        self.sensor_repository = (
+            SensorRepository()
+        )
 
     def create(
         self,
@@ -32,17 +41,29 @@ class ReadingService:
             )
 
         if sensor.sensor_type == "temperature":
-            if reading.value < -50 or reading.value > 100:
+            if (
+                reading.value < -50
+                or reading.value > 100
+            ):
                 raise HTTPException(
                     status_code=422,
-                    detail="Temperatura fuera de rango.",
+                    detail=(
+                        "Temperatura fuera de "
+                        "rango."
+                    ),
                 )
 
         elif sensor.sensor_type == "humidity":
-            if reading.value < 0 or reading.value > 100:
+            if (
+                reading.value < 0
+                or reading.value > 100
+            ):
                 raise HTTPException(
                     status_code=422,
-                    detail="Humedad fuera de rango.",
+                    detail=(
+                        "Humedad fuera de "
+                        "rango."
+                    ),
                 )
 
         return self.reading_repository.create(
@@ -65,9 +86,11 @@ class ReadingService:
         self,
         reading_id: int,
     ):
-        reading = self.reading_repository.get_by_id(
-            self.db,
-            reading_id,
+        reading = (
+            self.reading_repository.get_by_id(
+                self.db,
+                reading_id,
+            )
         )
 
         if reading is None:
@@ -82,9 +105,11 @@ class ReadingService:
         self,
         reading_id: int,
     ):
-        db_reading = self.reading_repository.get_by_id(
-            self.db,
-            reading_id,
+        db_reading = (
+            self.reading_repository.get_by_id(
+                self.db,
+                reading_id,
+            )
         )
 
         if db_reading is None:
@@ -103,7 +128,9 @@ class ReadingService:
         start: datetime,
         end: datetime,
     ):
-        return self.reading_repository.get_between_dates(
+        repository = self.reading_repository
+
+        return repository.get_between_dates(
             self.db,
             start,
             end,

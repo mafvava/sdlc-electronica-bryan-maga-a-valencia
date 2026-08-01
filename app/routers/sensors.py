@@ -2,8 +2,13 @@ from fastapi import APIRouter, Depends, Response
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.schemas.sensor import SensorCreate, SensorResponse
-from app.services.sensor_service import SensorService
+from app.schemas.sensor import (
+    SensorCreate,
+    SensorResponse,
+)
+from app.services.sensor_service import (
+    SensorService,
+)
 
 router = APIRouter(
     prefix="/sensors",

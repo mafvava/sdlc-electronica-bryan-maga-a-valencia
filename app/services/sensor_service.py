@@ -1,13 +1,15 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from app.repositories.sensor_repository import SensorRepository
+from app.repositories.sensor_repository import (
+    SensorRepository,
+)
 from app.schemas.sensor import SensorCreate
 
 
 class SensorService:
-    """Contiene la lógica de negocio relacionada con los sensores."""
-
+    """Contiene la lógica de negocio
+relacionada con los sensores."""
     def __init__(self, db: Session):
         self.db = db
         self.repository = SensorRepository()
@@ -33,15 +35,19 @@ class SensorService:
         self,
         sensor: SensorCreate,
     ):
-        existing_sensor = self.repository.get_by_name(
-            self.db,
-            sensor.name,
+        existing_sensor = (
+            self.repository.get_by_name(
+                self.db,
+                sensor.name,
+            )
         )
 
         if existing_sensor is not None:
             raise HTTPException(
                 status_code=409,
-                detail="Ya existe un sensor con ese nombre.",
+                detail=(
+    "Ya existe un sensor con ese nombre."
+),
             )
 
         return self.repository.create(

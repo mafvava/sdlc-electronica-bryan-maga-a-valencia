@@ -93,7 +93,9 @@ def test_delete_sensor(client: TestClient):
 
     sensor_id = create.json()["id"]
 
-    response = client.delete(f"/sensors/{sensor_id}")
+    response = client.delete(
+        f"/sensors/{sensor_id}"
+    )
 
     assert response.status_code == 204
 

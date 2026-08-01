@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 
-from app.database import Base
-from app.database import engine
-from app.routers.readings import router as reading_router
-from app.routers.sensors import router as sensor_router
-
-
-from fastapi import FastAPI
+from app.database import Base, engine
+from app.routers.readings import (
+    router as reading_router,
+)
+from app.routers.sensors import (
+    router as sensor_router,
+)
 
 app = FastAPI(
     title="SensorHub (EDSIA)",

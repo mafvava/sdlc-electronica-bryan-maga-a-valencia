@@ -1,6 +1,5 @@
-from collections.abc import Generator
-
 import os
+from collections.abc import Generator
 
 import pytest
 from fastapi.testclient import TestClient
@@ -30,7 +29,9 @@ TestingSessionLocal = sessionmaker(
 Base.metadata.create_all(bind=engine)
 
 
-def override_get_db() -> Generator[Session, None, None]:
+def override_get_db() -> Generator[
+    Session, None, None
+]:
     db = TestingSessionLocal()
     try:
         yield db

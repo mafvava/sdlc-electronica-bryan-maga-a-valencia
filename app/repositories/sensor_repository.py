@@ -5,9 +5,11 @@ from app.schemas.sensor import SensorCreate
 
 
 class SensorRepository:
-    """Repositorio encargado del acceso a la base de datos de sensores."""
-
-    def get_all(self, db: Session) -> list[Sensor]:
+    """Repositorio encargado del acceso a la base
+de datos de sensores."""
+    def get_all(
+        self, db: Session
+    ) -> list[Sensor]:
         return db.query(Sensor).all()
 
     def get_by_id(

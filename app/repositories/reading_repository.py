@@ -7,8 +7,8 @@ from app.schemas.reading import ReadingCreate
 
 
 class ReadingRepository:
-    """Repositorio encargado del acceso a la base de datos de lecturas."""
-
+    """Repositorio encargado del acceso a la base
+de datos de lecturas."""
     def get_all(
         self,
         db: Session,
@@ -38,7 +38,9 @@ class ReadingRepository:
         db: Session,
         reading: ReadingCreate,
     ) -> Reading:
-        db_reading = Reading(**reading.model_dump())
+        db_reading = Reading(
+            **reading.model_dump()
+        )
 
         db.add(db_reading)
         db.commit()
