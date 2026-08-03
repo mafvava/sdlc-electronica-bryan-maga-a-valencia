@@ -11,7 +11,7 @@ Quería organizar el proyecto siguiendo la arquitectura en cuatro capas que se p
 
 Le pedí una explicación sobre cómo estructurar el proyecto y cómo debía comunicarse cada capa con la siguiente.
 
-**Respuesta útil**
+**Respuestas útil**
 
 La IA me explicó que los routers únicamente reciben las solicitudes HTTP, los services contienen toda la lógica de negocio, los repositories son los encargados de acceder a la base de datos y los models representan las tablas. También me mostró cómo inyectar la sesión de la base de datos desde los routers hacia los servicios.
 
